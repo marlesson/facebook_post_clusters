@@ -1,0 +1,3 @@
+[submodule "Crawler"]
+	path = Crawler
+	url = git@github.com:marlesson/Facebook-Page-Crawler.git
