@@ -1,0 +1,4 @@
+{
+    "pca_variance_max": 0.8,
+    "range_of_cluster": [3, 10],
+}
