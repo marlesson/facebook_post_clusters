@@ -1,7 +1,17 @@
+# Graphics Plot
+#
+#
+#
+
 import scipy.stats as stats
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+import networkx as nx
+import matplotlib.colors as colors
+import matplotlib.cm as cm
+from sklearn.metrics.pairwise import euclidean_distances
+
 from wordcloud import WordCloud
 
 
@@ -144,3 +154,19 @@ def plot_word_cloud(outpath, cluster, text):
     plt.savefig(outpath+'wordsclound/%s_plot_word_cloud.png' %cluster)
     plt.clf()
     
+def plot_posts_graph(outpath, distance_matrix, km_labels_):
+    norm = colors.Normalize(vmin=km_labels_.min(),vmax=km_labels_.max())
+
+    dist = euclidean_distances(distance_matrix)
+    G = G=nx.from_numpy_matrix(dist)
+
+    plt.figure(figsize=(15,8))
+
+    nx.draw(G,
+        node_color = [norm(x) for x in km_labels_.tolist()],
+        node_size  = 25, 
+        edge_color = 'white',
+        cmap=cm.Spectral)
+    
+    plt.savefig(outpath+'plot_posts_graph.png')
+    plt.clf()

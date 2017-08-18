@@ -25,6 +25,8 @@ from graphics import *
 
 ##########################################################################################################
 if __name__ == '__main__':
+    # params 
+    params = json.loads(open("parameters.json", 'r').read())
 
     # Set crawler target and parameters.
     parser = argparse.ArgumentParser()
@@ -41,16 +43,13 @@ if __name__ == '__main__':
     page             = target
 
     outpath          = 'Result/'+page+'/'
-    range_of_cluster = range(10, 15)
-    pca_variance_max = 0.80
+    range_of_cluster = range(params['range_of_cluster'][0], params['range_of_cluster'][1])
+    pca_variance_max = params['pca_variance_max']
     f_stopwords      = 'Cluster/stopwords.txt'
-
-
 
     # ----------------------------------------------
     # Read json's posts for DataFrame 
     # ----------------------------------------------
-    print(target)
     print("------------ %s ------------\n" %page)
 
     print("\n\n---------------------------------------")
@@ -113,18 +112,20 @@ if __name__ == '__main__':
 
     # Tf-idf and document similarity
     # TODO: change this params for better results
-    tfidf_vectorizer = TfidfVectorizer(max_features=200000,
-                                       max_df=0.7,
-                                       min_df=0.01,  stop_words=stopwords, 
-                                       use_idf=True, tokenizer=tokenize_only, 
-                                       ngram_range=(1,3))
+
+    tfidf_vectorizer = TfidfVectorizer(max_features=params['tfidf_max_features'],
+                                       max_df=params['tfidf_max_df'],
+                                       min_df=params['tfidf_min_df'],  
+                                       stop_words=stopwords, 
+                                       use_idf=True, 
+                                       tokenizer=tokenize_only, 
+                                       ngram_range=(params['tfidf_ngram_range'][0],params['tfidf_ngram_range'][1]))
 
     tfidf_matrix = tfidf_vectorizer.fit_transform(df.text) #fit the vectorizer to synopses
-    terms = tfidf_vectorizer.get_feature_names()
+    terms        = tfidf_vectorizer.get_feature_names()
 
     print("Total features(tokens) %s" %tfidf_matrix.shape[1])
     print()
-
 
     # ----------------------------------------------
     # PCA - Dimensionality reduction
@@ -189,6 +190,7 @@ if __name__ == '__main__':
     #num_clusters = 30
     print()
     print("Choice %s clusters" %num_clusters)
+    
     # k-means
     km, _ = clustering(num_clusters, df_pca)
 
@@ -202,6 +204,7 @@ if __name__ == '__main__':
         dists.append(dist([df_pca.iloc[i]],[cluster_center]).reshape(1)[0])
     df['dist'] = dists
 
+    #plot_posts_graph(outpath, df_pca, km.labels_)
     plot_total_posts_per_cluster(outpath, df)
     plot_avg_eng_per_cluster(outpath, df)
     plot_box_avgt_eng_per_cluster(outpath, df)

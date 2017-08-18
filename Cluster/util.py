@@ -1,3 +1,10 @@
+# Util Functions
+#
+# * Estatistcs
+# * Text Mining
+# * k-means clustering
+# * Read dataset
+
 import numpy as np
 import scipy.stats as stats
 import os.path
@@ -14,6 +21,9 @@ from unicodedata import normalize
 import nltk #Natual Language
 import re
 
+
+# Returns the mean and standard deviation of samples
+#
 def sample_statistic(sample):
     scatter,loc,mean = stats.lognorm.fit(sample,floc=0) #Gives the paramters of the fit 
     var = math.e**(scatter**2) # Variancia no normal 
@@ -27,10 +37,14 @@ def sample_statistic(sample):
     print("median of data is %s" %median)
     return (mean, var)
 
-
+# Text cleanup , remove accentuation of text
+#
 def remove_accentuation(txt):
     return normalize('NFKD', txt).encode('ASCII','ignore').decode('ASCII')
 
+# Returns an Array[String] of text tokens
+# [token1, token2.. tokenn]
+#
 def tokenize_only(text):
     # first tokenize by sentence, then by word to ensure that punctuation is caught as it's own token
     tokens = [word.lower() for sent in nltk.sent_tokenize(text) for word in nltk.word_tokenize(sent)]
@@ -42,7 +56,9 @@ def tokenize_only(text):
                 filtered_tokens.append(token) 
     return filtered_tokens
 
-# Clustering
+# Distance used in Kmens to calculate similarity
+# Use Cosine Distance, better with text
+# 
 def dist(X, Y = None):
     # if Y == None:
     #   return euclidean_distances(X) 
@@ -51,27 +67,38 @@ def dist(X, Y = None):
       return 1-cosine_similarity(X) 
     return 1-cosine_similarity(X, Y)
 
+# Uses Kmens to cluster
+#
+#
 def clustering(nclust, sparse_data):
     print("Cluster", nclust)
+  
     # Manually override euclidean
     def euc_dist(X, Y = None, Y_norm_squared = None, squared = False):
         return dist(X,Y)
     k_means_.euclidean_distances = euc_dist
 
+    # Kmens
     kmeans = k_means_.KMeans(n_clusters = nclust)
+
     _ = kmeans.fit(sparse_data)
+
     return kmeans, _
     
-# Transforma matriz em binária
+# Apply in Matrix, Count Matrix to Binary Matrix 
+# 
 def to_binaryMatrix(x):
     return 1 if x > 0 else 0
-
 to_binaryMatrix = np.vectorize(to_binaryMatrix)
 
 
+# Calculo of Engagement of post
+#
 def engagement(post):
     return post['comments_count']+post['shares_count']+post['total']
 
+# Read a json posts and return a List of coluns
+#
 def post_json_to_list(path):
     json_lst = []
     # Ler arquivos

@@ -1,4 +1,10 @@
 {
-    "pca_variance_max": 0.8,
-    "range_of_cluster": [3, 10],
+    "fb_app_id": "APP_ID",
+    "fb_app_secret": "APP_SECRET",
+    "pca_variance_max": 0.7,
+    "range_of_cluster": [10, 50],
+    "tfidf_max_features": 200000,
+    "tfidf_max_df": 0.1,
+    "tfidf_min_df": 0.01,  
+    "tfidf_ngram_range": [1, 2]    
 }
