@@ -1,6 +1,6 @@
 {
-    "fb_app_id": "APP_ID",
-    "fb_app_secret": "APP_SECRET",
+    "fb_app_id": "236899350040075",
+    "fb_app_secret": "5cd7ce8deea9386d800e3ee97e6ebf3f",
     "pca_variance_max": 0.7,
     "range_of_cluster": [10, 50],
     "tfidf_max_features": 200000,
