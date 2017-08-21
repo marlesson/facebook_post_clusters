@@ -46,6 +46,7 @@ Change the information in the file `parameters.json`
 ### Step by Step
 
 * Data mining in text with bag of words and n-grams
+* Reduction of Dimensionality with PCA
 * Clustering with k-means
 * Automated generation of descriptors with decision tree
 * Cluster engagement analysis
