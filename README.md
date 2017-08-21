@@ -12,23 +12,23 @@
 
 ### Usage
 
-Update submodule
+#### Download Facebook Crawler (Facebook-Page-Crawler)
 
 `> git submodule init`
 
 `> git submodule update`
 
-Download Page Posts  for clustering
+#### Download Page Posts for clustering
 
 `> python Crawler/Facebook_Page_Crawler.py 'SiteOmelete' '2017-07-01 00:00:00' '2017-07-30 23:59:59' --resume`
 
-Clustering
+#### Clustering
 
 `> python Cluster/run.py 'SiteOmelete'`
 
-### Params
+### Default Params
 
-Change parameters.json
+Change the information in the file `parameters.json`
 
 ```json
 {
