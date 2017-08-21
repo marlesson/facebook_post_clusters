@@ -14,21 +14,23 @@
 
 Update submodule
 
-*git submodule init*
-*git submodule update*
+`> git submodule init`
 
-Dowlonad dataset with Post Pages
-python Crawler/Facebook_Page_Crawler.py 'SiteOmelete' '2017-07-01 00:00:00' '2017-07-30 23:59:59' --resume
+`> git submodule update`
+
+Download Page Posts  for clustering
+
+`> python Crawler/Facebook_Page_Crawler.py 'SiteOmelete' '2017-07-01 00:00:00' '2017-07-30 23:59:59' --resume`
 
 Clustering
 
-python Cluster/run.py 'SiteOmelete'
-
+`> python Cluster/run.py 'SiteOmelete'`
 
 ### Params
 
 Change parameters.json
 
+```json
 {
     "fb_app_id": "",
     "fb_app_secret": "",
@@ -39,3 +41,11 @@ Change parameters.json
     "tfidf_min_df": 0.01,  
     "tfidf_ngram_range": [1, 2]    
 }
+```
+
+### Step by Step
+
+* Data mining in text with bag of words and n-grams
+* Clustering with k-means
+* Automated generation of descriptors with decision tree
+* Cluster engagement analysis
